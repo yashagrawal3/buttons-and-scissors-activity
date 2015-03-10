@@ -3,6 +3,13 @@ import sys
 from random import *
 from buttons import *
 
+
+
+# WORKS ON U-T(Un-Tangled) ALGORITHM
+
+
+
+
 class setbuttons:
   
   
