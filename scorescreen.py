@@ -116,6 +116,9 @@ class scores:
                 gtk.main_iteration()
 
             event=pygame.event.poll()
+            if event.type==pygame.KEYDOWN:
+                #swoosh.play(0)
+                return 1
         
             if event.type == pygame.QUIT:
                 crashed = True
