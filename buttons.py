@@ -1,10 +1,8 @@
 import pygame
-
 import sys
 
 
 class button1:
-
     but = pygame.image.load("buts/b1.png")
     but = pygame.transform.scale(but, (50, 50))
     butno = 1
@@ -26,7 +24,6 @@ class button1:
 
 
 class button2:
-
     but = pygame.image.load("buts/b2.png")
     but = pygame.transform.scale(but, (50, 50))
     butno = 2
@@ -48,7 +45,6 @@ class button2:
 
 
 class button3:
-
     but = pygame.image.load("buts/b3.png")
     but = pygame.transform.scale(but, (50, 50))
     butno = 3
@@ -70,7 +66,6 @@ class button3:
 
 
 class button4:
-
     but = pygame.image.load("buts/b4.png")
     but = pygame.transform.scale(but, (50, 50))
     butno = 4
@@ -92,7 +87,6 @@ class button4:
 
 
 class button5:
-
     but = pygame.image.load("buts/b5.png")
     but = pygame.transform.scale(but, (50, 50))
     butno = 5
@@ -114,7 +108,6 @@ class button5:
 
 
 class button6:
-
     but = pygame.image.load("buts/b6.png")
     but = pygame.transform.scale(but, (50, 50))
     butno = 6
@@ -136,7 +129,6 @@ class button6:
 
 
 class button7:
-
     but = pygame.image.load("buts/b7.png")
     but = pygame.transform.scale(but, (50, 50))
     butno = 7

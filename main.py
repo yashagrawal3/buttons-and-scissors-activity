@@ -20,7 +20,6 @@
 # Contact information:
 # Utkarsh Tiwari    iamutkarshtiwari@gmail.com
 
-
 import gtk
 import pickle
 import pygame
@@ -39,7 +38,6 @@ from rules import *
 class game:
 
     def make(self):
-
         pygame.init()
         sound = True
         try:
@@ -49,20 +47,15 @@ class game:
             print 'error with sound', err
 
         i = 0
-
         gameDisplay = pygame.display.get_surface()
         if not(gameDisplay):
             info = pygame.display.Info()
             gameDisplay = pygame.display.set_mode(
                 (info.current_w, info.current_h))  # initializing display surface
-            # gameDisplay=pygame.display.set_mode((800,600))
             # window name
             pygame.display.set_caption("Buttons & Scissors")
             gameicon = pygame.image.load('buts/icon2.png')
             pygame.display.set_icon(gameicon)
-
-        #disp_width = gameDisplay.get_width()
-        #disp_height = gameDisplay.get_height()
 
         disp_width = 800
         disp_height = 600
@@ -72,12 +65,8 @@ class game:
 
         background = pygame.image.load(
             "buts/background.jpg").convert()  # background image load
-
-        # background.set_alpha(220)
-
         background = pygame.transform.scale(
             background, (disp_width + 100, disp_height + 250))
-
         home = pygame.transform.scale(
             pygame.image.load("buts/home.png"), (80, 80))
         restart = pygame.transform.scale(
@@ -86,39 +75,20 @@ class game:
             pygame.image.load("buts/undo.png"), (80, 80))
         hlp = pygame.transform.scale(
             pygame.image.load("buts/help.png"), (80, 80))
-
         stitch = pygame.transform.scale(
             pygame.image.load("buts/stitch.png"), (40, 40))
 
-        # SOUND FILES LOAD##############3
-
-        '''
-        b=scores()
-        b=b.make(gameDisplay,totaltime,moves,sound)
-        '''
-
+        # SOUND FILES LOADED
         b = welcome()  # Welcome Screen Call
         bvalue = b.make(gameDisplay, sound)
-
         crashed = False
-
         black = (0, 0, 0)
-
         white = (255, 255, 255)
-
-        # buttons coordinates array
-
-        # Bug After
-        # This#############################################################33
-
         horizontal = vertical = rightd = leftd = 0
-
         rightd = leftd = lastx = lasty = 0
         buttonslist = []
-
         x = [370 + 280, 435 + 280, 500 + 280, 565 + 280, 630 + 280]
         y = [235, 300, 365, 430, 495]
-
         backup = []
         backflag = 0
         homeflag = 0
@@ -153,7 +123,7 @@ class game:
         if sound:
             pygame.mixer.Sound("sound/gamestart.ogg").play(0)
 
-        while not crashed:  # MAIN GAME LOOP BEGINS #############################################
+        while not crashed:  # MAIN GAME LOOP BEGINS
             # Gtk events
             while gtk.events_pending():
                 gtk.main_iteration()
@@ -161,7 +131,6 @@ class game:
             totaltime += timer.tick()
             if event.type == pygame.QUIT:
                 totaltime += timer.tick()
-
                 with open('score.pkl', 'wb') as output:
                     pickle.dump(buttonslist, output, pickle.HIGHEST_PROTOCOL)
                     pickle.dump(backup, output, pickle.HIGHEST_PROTOCOL)
@@ -176,7 +145,6 @@ class game:
 
             if(not ((mos_x <= 675 + 280) and (mos_x >= 363 + 280) and (mos_y <= 532) and (mos_y >= 225))):
                 temp = track()
-
                 vertical = horizontal = rightd = leftd = 0
                 lastx = lasty = 0
 
@@ -239,7 +207,6 @@ class game:
 
                 if event.type == pygame.MOUSEBUTTONUP:
                     homeflag = 0
-
             else:
                 gameDisplay.blit(home, (250 + 280, 235))
 
@@ -250,23 +217,13 @@ class game:
                     if sound:
                         pygame.mixer.music.load("sound/button.ogg")
                         pygame.mixer.music.play(0)
-                    '''
-                    for i in checklist.sentcoordinatelist:
-                         i.flag=0
-                         
-                    Biglist.append(checklist)
-                    checklist=0
-                    '''
 
                     for j in backup[len(backup) - 1]:
-
                         j.flag = 0
                         j.i = 0
 
                     for i in backup[len(backup) - 1]:
                         buttonslist.append(i)
-
-                    # print backup[len(backup)-1]
 
                     backup.remove(backup[len(backup) - 1])
 
@@ -277,7 +234,6 @@ class game:
                 if event.type == pygame.MOUSEBUTTONUP:
                     backflag = 0
                     flag = 0
-
             else:
                 gameDisplay.blit(undo, (250 + 280, 315))
 
@@ -304,7 +260,6 @@ class game:
                         j.flag = 0
                         j.i = 0
                     buttonslist = list(backupbuttonslist)
-
                 if event.type == pygame.MOUSEBUTTONUP:
                     backreset = 0
 
@@ -324,36 +279,25 @@ class game:
 
                 if event.type == pygame.MOUSEBUTTONUP:
                     helpf = 0
-
             else:
                 gameDisplay.blit(hlp, (250 + 280, 475))
 
-                # BUTTON TRACKING BEGINS......
-
-            # print leftd,rightd,vertical,horizontal
-
+            # BUTTON TRACKING BEGINS......
             for t in buttonslist:
                 if t.but.get_rect(center=(t.x_axis + 25, t.y_axis + 25)).collidepoint(mos_x, mos_y):
                     if t.x_axis == lastx and t.y_axis == lasty:
                         break
-
                     button = t
                     buttoncheck = 1
-
                     diff = button.x_axis - button.y_axis
                     total = button.x_axis + button.y_axis
 
                     if (pygame.mouse.get_pressed())[0] == 1 and buttonup == 0:
-
                         flag = 1
-
                         if(len(temp.coordinatelist) != 0):
-
                             # SAME COLOR TEST ###
                             if (button.butno == temp.coordinatelist[len(temp.coordinatelist) - 1].butno):
-
                                 if((lastx == button.x_axis) or (lasty == button.y_axis) or (lastdiff == diff) or (lasttotal == total)):
-
                                     if(lastdiff == diff):
                                         chkf = 0
                                         for chk in buttonslist:
@@ -366,9 +310,7 @@ class game:
                                                     if (chk.y_axis > lasty and chk.x_axis > lastx) and (chk.y_axis < button.y_axis and chk.x_axis < button.x_axis):
                                                         chkf = 1
                                                         break
-
                                     elif(lasttotal == total):
-
                                         chkf = 0
                                         for chk in buttonslist:
                                             if (chk.x_axis + chk.y_axis == total):
@@ -380,9 +322,7 @@ class game:
                                                     if (chk.y_axis > lasty and chk.x_axis < lastx) and (chk.y_axis < button.y_axis and chk.x_axis > button.x_axis):
                                                         chkf = 1
                                                         break
-
                                     elif(lastx == button.x_axis):
-
                                         chkf = 0
                                         for chk in buttonslist:
                                             if chk.x_axis == lastx:
@@ -394,9 +334,7 @@ class game:
                                                     if (chk.y_axis > lasty and chk.x_axis == lastx) and (chk.y_axis < button.y_axis and chk.x_axis == lastx):
                                                         chkf = 1
                                                         break
-
                                     else:
-
                                         chkf = 0
                                         for chk in buttonslist:
                                             if chk.y_axis == lasty:
@@ -408,11 +346,8 @@ class game:
                                                     if (chk.x_axis > lastx and chk.y_axis == lasty) and (chk.x_axis < button.x_axis and chk.y_axis == lasty):
                                                         chkf = 1
                                                         break
-
                                     if(vertical == 0 and horizontal == 0 and rightd == 0 and leftd == 0):
-
                                         if chkf == 0:
-
                                             if lasttotal == total:
                                                 rightd = 1
                                                 temp.insert(button)
@@ -420,7 +355,6 @@ class game:
                                                 lasttotal = button.x_axis + button.y_axis
                                                 lastx = button.x_axis
                                                 lasty = button.y_axis
-
                                             elif lastdiff == diff:
                                                 leftd = 1
                                                 temp.insert(button)
@@ -428,7 +362,6 @@ class game:
                                                 lasttotal = button.x_axis + button.y_axis
                                                 lastx = button.x_axis
                                                 lasty = button.y_axis
-
                                             elif lastx == button.x_axis:
                                                 vertical = 1
                                                 temp.insert(button)
@@ -436,7 +369,6 @@ class game:
                                                 lasttotal = button.x_axis + button.y_axis
                                                 lastx = button.x_axis
                                                 lasty = button.y_axis
-
                                             else:
                                                 horizontal = 1
                                                 temp.insert(button)
@@ -444,98 +376,68 @@ class game:
                                                 lasttotal = button.x_axis + button.y_axis
                                                 lastx = button.x_axis
                                                 lasty = button.y_axis
-
                                         else:
-
                                             temp = track()
                                             buttonup = 1
                                             vertical = horizontal = rightd = leftd = 0
-                                            # lastx=lasty=0
-
                                     else:
-                                                            ########### AAFTER
-
                                         if(vertical == 1):
                                             if(lastx == button.x_axis):
-
                                                 if chkf == 0:
-
                                                     temp.insert(button)
                                                     lastdiff = button.x_axis - button.y_axis
                                                     lasttotal = button.x_axis + button.y_axis
                                                     lastx = button.x_axis
                                                     lasty = button.y_axis
-
                                                 else:
-
                                                     temp = track()
                                                     buttonup = 1
                                                     vertical = horizontal = rightd = leftd = 0
-                                                    # lastx=lasty=0
 
                                         elif(horizontal == 1):
                                             if(lasty == button.y_axis):
-
                                                 if chkf == 0:
-
                                                     temp.insert(button)
                                                     lastdiff = button.x_axis - button.y_axis
                                                     lasttotal = button.x_axis + button.y_axis
                                                     lastx = button.x_axis
                                                     lasty = button.y_axis
-
                                                 else:
-
                                                     temp = track()
                                                     buttonup = 1
                                                     vertical = horizontal = rightd = leftd = 0
 
                                         elif(leftd == 1):
                                             if(lastdiff == diff):
-
                                                 if chkf == 0:
-
                                                     temp.insert(button)
                                                     lastdiff = button.x_axis - button.y_axis
                                                     lasttotal = button.x_axis + button.y_axis
                                                     lastx = button.x_axis
                                                     lasty = button.y_axis
-
                                                 else:
-
                                                     temp = track()
                                                     buttonup = 1
                                                     vertical = horizontal = rightd = leftd = 0
-                                                    # lastx=lasty=0
-
                                         else:
                                             if(lasttotal == total):
-
                                                 if chkf == 0:
-
                                                     temp.insert(button)
                                                     lastdiff = button.x_axis - button.y_axis
                                                     lasttotal = button.x_axis + button.y_axis
                                                     lastx = button.x_axis
                                                     lasty = button.y_axis
-
                                                 else:
-
                                                     temp = track()
                                                     buttonup = 1
                                                     vertical = horizontal = rightd = leftd = 0
-                                                    # lastx=lasty=0
 
                             else:  # to nullify the tracking if  other buttons are encountered in path
-
                                 temp = track()
                                 buttonup = 1
-                                # flag=1
                                 vertical = horizontal = rightd = leftd = 0
                                 lastx = lasty = 0
-
                         else:
-
                             if sound:
                                 pygame.mixer.music.load("sound/cbut.ogg")
                                 pygame.mixer.music.play(0)
@@ -544,7 +446,6 @@ class game:
                             lasttotal = button.x_axis + button.y_axis
                             lastx = button.x_axis
                             lasty = button.y_axis
-
                             showline = linetrack(
                                 temp.coordinatelist[0], buttonslist)
 
@@ -552,7 +453,6 @@ class game:
 
             if flag == 1:
                 if (pygame.mouse.get_pressed())[0] == 0:
-
                     if(len(temp.coordinatelist) != 0):
                         if(t.x_axis == temp.coordinatelist[0].x_axis and t.y_axis == temp.coordinatelist[0].y_axis):
                             temp = track()
@@ -561,18 +461,13 @@ class game:
                     if(len(temp.coordinatelist) == 1):
                         temp = track()
                         vertical = horizontal = rightd = leftd = 0
-                        # lastx=lasty=0
-
                         flag = 0
 
                     if(len(temp.coordinatelist) > 1 and len(buttonslist) != 0):
                         for j in temp.coordinatelist:
                             buttonslist.remove(j)
-
                         lastbackup = list(temp.coordinatelist)
-
                         backup.append(list(temp.coordinatelist))
-
                         temp2 = scissorrun(list(temp.coordinatelist))
                         Biglist.append(temp2)
                     flag = 0
@@ -581,19 +476,14 @@ class game:
                     lastx = lasty = 0
                     vertical = horizontal = rightd = leftd = 0
 
-                # print len(temp.coordinatelist)len(lastbackup)
-
             if(len(temp.coordinatelist) != 0):          # White Circle Blitting
-
                 temp.display(gameDisplay)
 
             # Button Display List
-
             for i in range(len(buttonslist)):        # Non Movable Buttons
                 buttonslist[i].display(gameDisplay)
 
             if flag == 1:                                # White line display
-
                 showline.displayline(gameDisplay)
 
             if(len(Biglist) != 0):
@@ -604,14 +494,10 @@ class game:
                         moves += 1
                         if len(buttonslist) == 0 and len(Biglist) == 0:
                             end = 1
-
                         continue
-
                     j.display(gameDisplay)
 
             if len(buttonslist) == 0 and end == 1:
-
-                print moves
                 b = scores()
                 b = b.make(gameDisplay, totaltime, moves, sound)
                 if b == 1:
@@ -631,13 +517,11 @@ class game:
                     lastb = 0
                     helpf = 0
                     buttonup = 0
-
                     showline = linetrack(buttonslist[0], buttonslist)
 
                     if sound:
                         pygame.mixer.music.load("sound/gamestart.ogg")
                         pygame.mixer.music.play(0)
-
                 if b == 2:
                     totaltime = 0
                     backup = []
@@ -654,7 +538,6 @@ class game:
                     for j in backupbuttonslist:
                         j.flag = 0
                         j.i = 0
-
                     buttonslist = list(backupbuttonslist)
                     if sound:
                         pygame.mixer.music.load("sound/gamestart.ogg")
@@ -668,7 +551,6 @@ class game:
                 sys.exit()
 
         # Just a window exception check condition
-
         event1 = pygame.event.get()
         if event1.type == pygame.QUIT:
             crashed = True
@@ -676,7 +558,6 @@ class game:
         if crashed == True:
             pygame.quit()
             sys.exit()
-
 
 if __name__ == "__main__":
     g = game()

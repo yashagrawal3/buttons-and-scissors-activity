@@ -8,7 +8,6 @@ import gtk
 class scores:
 
     def make(self, gameDisplay, totaltime, moves, sound):
-
         i = 0
         white = (255, 255, 255)
         disp_width = 900
@@ -92,14 +91,10 @@ class scores:
                              str(minutes) + ':' + str(seconds), 1, (255, 255, 161))
         t = 0
         scorex = -50
-
         Mintime = font2.render(str(mintime), 1, (255, 255, 161))
-
         Excellent = font2.render("Excellent!", 1, (255, 255, 161))
-
         Newbest = font2.render("New best score!", 1, (255, 255, 161))
         scores = font2.render("Score: " + str(scores), 1, (255, 255, 161))
-
         newhighscore = font2.render("New High Score!", 1, (255, 255, 161))
         if sound:
             pygame.mixer.stop()
@@ -110,17 +105,14 @@ class scores:
             # Gtk events
             while gtk.events_pending():
                 gtk.main_iteration()
-
             event = pygame.event.poll()
             if event.type == pygame.KEYDOWN:
-                # swoosh.play(0)
                 return 1
 
             if event.type == pygame.QUIT:
                 crashed = True
 
             mos_x, mos_y = pygame.mouse.get_pos()
-
             gameDisplay.fill(black)
             gameDisplay.blit(background, (0 + 280, 0))
 
@@ -151,11 +143,6 @@ class scores:
             t += 1
             gameDisplay.blit(Level, (340 + 280 + 10, 50))
             gameDisplay.blit(completed, (280 + 280 + 10, 100))
-
-            '''
-            gameDisplay.blit(Excellent,(scorex,300))
-            gameDisplay.blit(Newbest,(scorex,300))
-            '''
 
             if(scorex + 280 > 0):
                 gameDisplay.blit(Score, (scorex + 280, 230))
