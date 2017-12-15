@@ -6,3 +6,4 @@ icon = buttons
 exec = sugar-activity activity.Activity
 license = GPLv3
 summary = A game about buttons and scissors
+repository = https://github.com/sugarlabs/buttons-and-scissors-activity.git
