@@ -215,7 +215,7 @@ class game:
                     undo, (90, 90)), (250 + 280, 315))
                 if (pygame.mouse.get_pressed())[0] == 1 and len(backup) != 0 and backflag == 0:
                     if sound:
-                        pygame.mixer.music.load("sound/button.ogg")
+                        pygame.mixer.music.load("sound/undo1.ogg")
                         pygame.mixer.music.play(0)
 
                     for j in backup[len(backup) - 1]:
