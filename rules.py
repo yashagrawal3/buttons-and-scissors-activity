@@ -8,7 +8,7 @@ class rule:
 
     def make(self, gameDisplay, sound):
         check = 0
-        background = pygame.image.load("images/ruless.jpg").convert()
+        background = pygame.image.load("images/rules.jpg").convert()
         background = pygame.transform.scale(background, (900, 715))
         crashed = False
         clock = pygame.time.Clock()
