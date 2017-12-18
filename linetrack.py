@@ -30,8 +30,8 @@ class linetrack:
         tempy2 = 0
         i = 25
         self.buttonx = button.x_axis + i
-        self.buttony = button.y_axis + i\
-            self.flag = 0
+        self.buttony = button.y_axis + i
+        self.flag = 0
 
         # For horizontal check
         tempx1 = button.x_axis
