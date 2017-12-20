@@ -1,4 +1,6 @@
-import gtk
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
 import pygame
 import sys
 import os
@@ -61,8 +63,8 @@ class welcome:
 
         while not crashed:  # MAIN GAME LOOP BEGINS
             # Gtk events
-            while gtk.events_pending():
-                gtk.main_iteration()
+            while Gtk.events_pending():
+                Gtk.main_iteration()
             event = pygame.event.poll()
             if event.type == pygame.QUIT:
                 crashed = True

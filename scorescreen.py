@@ -2,7 +2,9 @@ import pygame
 import sys
 import os
 import pickle
-import gtk
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
 
 
 class scores:
@@ -103,8 +105,8 @@ class scores:
 
         while not crashed:
             # Gtk events
-            while gtk.events_pending():
-                gtk.main_iteration()
+            while Gtk.events_pending():
+                Gtk.main_iteration()
             event = pygame.event.poll()
             if event.type == pygame.KEYDOWN:
                 return 1
