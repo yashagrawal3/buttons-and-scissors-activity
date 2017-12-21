@@ -77,7 +77,7 @@ class scores:
         seconds = int(totaltime)
         check = 0
 
-        font_path = "fonts/comicsans.ttf"
+        font_path = "fonts/arial.ttf"
         font_size = 50
         font1 = pygame.font.Font(font_path, font_size)
 

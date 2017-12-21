@@ -16,7 +16,7 @@ class about:
         myimage = pygame.transform.scale(myimage, (80, 80))
         crashed = False
         clock = pygame.time.Clock()
-        font_path = "fonts/comicsans.ttf"
+        font_path = "fonts/arial.ttf"
         font_size = 50
         font1 = pygame.font.Font(font_path, font_size)
         back = pygame.image.load("buts/welcomescreen/back.png")
