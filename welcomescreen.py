@@ -98,13 +98,10 @@ class welcome:
                     if sound:
                         s1.play()
                     flag = 1
-                    check = 1
                     gameDisplay.fill(black)
                     a = about()
                     a.make(gameDisplay, sound)
 
-                if event.type == pygame.MOUSEBUTTONUP:
-                    check = 0
             else:
                 gameDisplay.blit(abouts, (50 + 280, 500))
 
@@ -117,10 +114,7 @@ class welcome:
                     gameDisplay.fill(black)
                     ru = rule()
                     ru.make(gameDisplay, sound)
-                    check = 1
 
-                if event.type == pygame.MOUSEBUTTONUP:
-                    check = 0
             else:
                 gameDisplay.blit(helps, (230 + 280, 500))
 
