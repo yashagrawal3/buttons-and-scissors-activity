@@ -118,9 +118,16 @@ class welcome:
             else:
                 gameDisplay.blit(helps, (230 + 280, 500))
 
-	    if os.path.exists("score.pkl")==False:
+	    #Create all .pkl that does not exist
+            if os.path.exists("score.pkl")==False:
 		open('score.pkl','w+')
 
+            if os.path.exists("maxscore.pkl")==False:
+		open('maxscore.pkl','w+')
+            
+            if os.path.exists("lasttime.pkl")==False:
+		open('lasttime.pkl','w+')
+            
             if os.path.getsize("score.pkl") > 0:
                 if conti.get_rect(center=(50 + contix + 60 + 280, -170 + contiy + 20)).collidepoint(mos_x, mos_y):  # CONTINUE
                     gameDisplay.blit(pygame.transform.scale(
