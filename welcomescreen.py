@@ -54,12 +54,18 @@ class welcome:
         flag = 0
         white = (255, 255, 255)
 
-        check = 0
         s1 = pygame.mixer.Sound("sound/button.ogg")
         bk = pygame.mixer.Sound("sound/bk_menu.ogg")
         if sound:
             bk.play(-1)
         flag1 = flag2 = 0
+
+        play_active = False
+        help_active = False
+	about_active = False
+        conti_active = False
+        newgame_active = False
+        back_active = False
 
         while not crashed:  # MAIN GAME LOOP BEGINS
             # Gtk events
@@ -74,111 +80,122 @@ class welcome:
             gameDisplay.fill(black)
             gameDisplay.blit(background, (0 - 50 + 280, 0 - 60))
 
-            if play.get_rect(center=(185 + playx + 280, 360 + playy)).collidepoint(mos_x, mos_y):  # PLAY
-                gameDisplay.blit(pygame.transform.scale(
-                    play, (180, 180)), (100 + playx + 280, 275 + playy))
-                if (pygame.mouse.get_pressed())[0] == 1 and check == 0:
-                    if sound:
-                        s1.play()
-                    playclick = 1
-                    t1 = t2 = 0
-                    flag2 = 0
-                    check = 1
-                if event.type == pygame.MOUSEBUTTONUP:
-                    check = 0
+            # create .pkl file if they don't exist
+            if os.path.exists("score.pkl")==False:
+		open('score.pkl','w+')
+            if os.path.exists("maxscore.pkl")==False:
+		open('maxscore.pkl','w+')
+            if os.path.exists("lasttime.pkl")==False:
+		open('lasttime.pkl','w+')
 
+            if (event.type == pygame.MOUSEMOTION):
+                eve_x, eve_y = event.pos
+                play_active = play.get_rect(center=(185 + playx + 280, 360 + playy)).collidepoint(eve_x, eve_y)
+                about_active = abouts.get_rect(center=(95 + 280, 545)).collidepoint(eve_x, eve_y)
+                help_active = helps.get_rect(center=(275 + 280, 545)).collidepoint(eve_x, eve_y)
+                conti_active = conti.get_rect(center=(50 + contix + 60 + 280, -190 + contiy + 20)).collidepoint(eve_x, eve_y)
+                newgame_active = newgame.get_rect(center=(25 + newgamex + 90 + 280, -70 + newgamey + 10)).collidepoint(eve_x, eve_y)
+                back_active = back.get_rect(center=(280 + backx + 90 + 280, -70 + backy + 10)).collidepoint(eve_x, eve_y)
+
+
+            if play_active:                                                                      # PLAY
+                gameDisplay.blit(pygame.transform.scale(play, (180, 180)), (100 + playx + 280, 275 + playy))
             else:
-                if 100 + playx + 280 > 0:
-                    gameDisplay.blit(play, (100 + playx + 280, 275 + playy))
+                gameDisplay.blit(play, (100 + playx + 280, 275 + playy))
 
-            if abouts.get_rect(center=(95 + 280, 545)).collidepoint(mos_x, mos_y):  # ABOUT
-                gameDisplay.blit(pygame.transform.scale(
-                    abouts, (90, 90)), (50 + 280, 500))
-                if (pygame.mouse.get_pressed())[0] == 1 and check == 0:
-                    if sound:
-                        s1.play()
-                    flag = 1
-                    gameDisplay.fill(black)
-                    a = about()
-                    a.make(gameDisplay, sound)
+            if (event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP) and event.button == 1:
+                eve_x, eve_y = event.pos
+                if play.get_rect(center= (185 + playx + 280, 360 + playy)).collidepoint(eve_x, eve_y):
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if sound:
+                            s1.play()
+                        playclick = 1
+                        t1 = t2 = 0
+                        flag2 = 0
+                        play_active = False
 
+            if about_active:                                                                    # ABOUT
+                gameDisplay.blit(pygame.transform.scale(abouts, (90, 90)), (50 + 280, 500))
             else:
                 gameDisplay.blit(abouts, (50 + 280, 500))
 
-            if helps.get_rect(center=(275 + 280, 545)).collidepoint(mos_x, mos_y):  # HELP
-                gameDisplay.blit(pygame.transform.scale(
-                    helps, (90, 90)), (230 + 280, 500))
-                if (pygame.mouse.get_pressed())[0] == 1 and check == 0:
-                    if sound:
-                        s1.play()
-                    gameDisplay.fill(black)
-                    ru = rule()
-                    ru.make(gameDisplay, sound)
+            if (event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP) and event.button == 1:
+                eve_x, eve_y = event.pos
+                if abouts.get_rect(center=(95 + 280, 545)).collidepoint(eve_x, eve_y):
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if sound:
+                            s1.play()
+                        flag = 1
+                        gameDisplay.fill(black)
+                        a = about()
+                        a.make(gameDisplay, sound)
+                        about_active = False
 
+            if help_active:                                                                   # HELP
+                gameDisplay.blit(pygame.transform.scale(helps, (90, 90)), (230 + 280, 500))
             else:
                 gameDisplay.blit(helps, (230 + 280, 500))
 
-	    #Create all .pkl that does not exist
-            if os.path.exists("score.pkl")==False:
-		open('score.pkl','w+')
+            if (event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP) and event.button == 1:
+                eve_x, eve_y = event.pos
+                if helps.get_rect(center=(275 + 280, 545)).collidepoint(eve_x, eve_y):
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if sound:
+                            s1.play()
+                        gameDisplay.fill(black)
+                        ru = rule()
+                        ru.make(gameDisplay, sound)
+                        help_active = False
 
-            if os.path.exists("maxscore.pkl")==False:
-		open('maxscore.pkl','w+')
-            
-            if os.path.exists("lasttime.pkl")==False:
-		open('lasttime.pkl','w+')
-            
+
             if os.path.getsize("score.pkl") > 0:
-                if conti.get_rect(center=(50 + contix + 60 + 280, -170 + contiy + 20)).collidepoint(mos_x, mos_y):  # CONTINUE
-                    gameDisplay.blit(pygame.transform.scale(
-                        conti, (260, 75)), (50 + contix + 280, -170 + contiy))
-                    if (pygame.mouse.get_pressed())[0] == 1 and check == 0:
+                if conti_active:                                                                   # CONTINUE
+                    gameDisplay.blit(pygame.transform.scale(conti, (260, 75)), (50 + contix + 280, -190 + contiy))
+                else:
+                    gameDisplay.blit(conti, (50 + contix + 280, -190 + contiy))
+
+                if (event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP) and event.button == 1:
+                    eve_x, eve_y = event.pos
+                    if conti.get_rect(center=(50 + contix + 60 + 280, -190 + contiy + 20)).collidepoint(eve_x, eve_y):
+                        if event.type == pygame.MOUSEBUTTONDOWN:
+                            if sound:
+                                pygame.mixer.stop()
+                            gameDisplay.fill(black)
+                            conti_active = False
+                            return 0
+
+            if newgame_active:                                                                        # NEWGAME
+                gameDisplay.blit(pygame.transform.scale(newgame, (260, 75)),  (25 + newgamex + 280, -70 + newgamey))
+            else:
+                gameDisplay.blit(newgame,  (25 + newgamex + 280, -70 + newgamey))
+
+            if (event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP) and event.button == 1:
+                eve_x, eve_y = event.pos
+                if newgame.get_rect(center=(25 + newgamex + 90 + 280, -70 + newgamey + 10)).collidepoint(eve_x, eve_y):
+                    if event.type == pygame.MOUSEBUTTONDOWN:
                         if sound:
                             pygame.mixer.stop()
+                            s1.play()
                         gameDisplay.fill(black)
-                        return 0
-                        check = 1
+                        newgame_active = False
+                        return 1
 
-                    if event.type == pygame.MOUSEBUTTONUP:
-                        check = 0
-                else:
-                    if 50 + contix + 280 > 0:
-                        gameDisplay.blit(
-                            conti, (50 + contix + 280, -170 + contiy))
-
-            if newgame.get_rect(center=(25 + newgamex + 90 + 280, -50 + newgamey + 10)).collidepoint(mos_x, mos_y):  # NEWGAME
-                gameDisplay.blit(pygame.transform.scale(
-                    newgame, (260, 75)), (25 + newgamex + 280, -50 + newgamey))
-                if (pygame.mouse.get_pressed())[0] == 1 and check == 0:
-                    if sound:
-                        pygame.mixer.stop()
-                        s1.play()
-                    check = 1
-                    gameDisplay.fill(black)
-                    return 1
-                if event.type == pygame.MOUSEBUTTONUP:
-                    check = 0
+            if back_active:                                                                        # BACK
+                gameDisplay.blit(pygame.transform.scale(back, (150, 75)), (290 + backx + 280, -70 + backy))
             else:
-                if -50 + newgamey > 0:
-                    gameDisplay.blit(
-                        newgame, (25 + newgamex + 280, -50 + newgamey))
+                gameDisplay.blit(back,  (290 + backx + 280, -70 + backy))
 
-            if back.get_rect(center=(280 + backx + 90 + 280, -70 + backy + 20 + 10)).collidepoint(mos_x, mos_y):  # BACK
-                gameDisplay.blit(pygame.transform.scale(
-                    back, (150, 75)), (290 + backx + 280, -50 + backy))
-                if (pygame.mouse.get_pressed())[0] == 1 and check == 0:
-                    if sound:
-                        s1.play()
-                    backclick = 1
-                    t1 = t2 = 0
-                    flag1 = 0
-                    check = 1
-                if event.type == pygame.MOUSEBUTTONUP:
-                    check = 0
+            if (event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP) and event.button == 1:
+                eve_x, eve_y = event.pos
+                if back.get_rect(center=(280 + backx + 90 + 280, -70 + backy + 10)).collidepoint(eve_x, eve_y):
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if sound:
+                            pygame.mixer.stop()
+                        backclick = 1
+                        t1 = t2 = 0
+                        flag1 = 0
+                        back_active = False
 
-            else:
-                if -50 + backy > 0:
-                    gameDisplay.blit(back, (290 + backx + 280, -50 + backy))
             gameDisplay.blit(title, (20 + 280, 10))  # Title Window
 
             # iNCREMENT DECREMENT
@@ -192,7 +209,7 @@ class welcome:
                     playx = 0
                     flag1 = 1
 
-                if -50 + newgamey > 370:
+                if -50 + newgamey > 400:
                     playclick = 0
                 else:
                     newgamey += (0.2 * (t2**1))
